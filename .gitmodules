@@ -1,0 +1,3 @@
+[submodule "stalker_thm_editor/thm/external"]
+    path = stalker_thm_editor/thm/external
+    url = https://github.com/PavelBlend/blender-xray/blob/develop/io_scene_xray
