@@ -1,5 +1,5 @@
 
-from .external.io_scene_xray import xray_io
+from external import xray_io
 from . import format_
 
 

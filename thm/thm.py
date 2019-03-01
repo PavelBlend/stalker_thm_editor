@@ -1,12 +1,12 @@
 
-import xray_io
+from external import xray_io
 from . import format_
 from . import read
 from . import types
 
 
 def main():
-    thm_file = open('C:\\Users\\Pavel\\Desktop\\thm_editor\\thm\\act_antigas.thm', 'rb')
+    thm_file = open('act_antigas.thm', 'rb')
     thm_data = thm_file.read()
     thm_file.close()
 
