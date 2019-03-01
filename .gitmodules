@@ -1,3 +1,0 @@
-[submodule "external/blender-xray"]
-	path = external/blender-xray
-	url = git://github.com/PavelBlend/blender-xray

@@ -1,6 +1,6 @@
 
+import xray_io
 from . import format_
-from .external.io_scene_xray import xray_io
 from . import read
 from . import types
 
