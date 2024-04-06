@@ -56,7 +56,7 @@ def read_material_or_object_params(data, thm):
         thm.set_material(material, material_weight)
 
     else:
-        print('unsupported *.thm object param')
+        print('unsupported *.thm params')
 
 
 def read_bump(data, thm):
