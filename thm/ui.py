@@ -135,18 +135,17 @@ def associate_thm_files():
     os.system(command)
 
 
-def draw_thumbnail(thm, data_canvas):
+def draw_thumbnail(thm, img):
     background_color = (127, 127, 127)
-    for pixel_coord_y in range(format_.THUMB_HEIGHT):
-        for pixel_coord_x in range(format_.THUMB_WIDTH):
+    for pixel_coord_x in range(format_.THUMB_WIDTH):
+        for pixel_coord_y in range(format_.THUMB_HEIGHT):
             pixel_offset = (pixel_coord_y * format_.THUMB_WIDTH + pixel_coord_x) * 4
             alpha = thm.data[pixel_offset + 3] / 255
             red = int(round(thm.data[pixel_offset] * alpha + background_color[0] * (1.0 - alpha), 0))
             green = int(round(thm.data[pixel_offset + 1] * alpha + background_color[1] * (1.0 - alpha), 0))
             blue = int(round(thm.data[pixel_offset + 2] * alpha + background_color[2] * (1.0 - alpha), 0))
             color = '#{:0>2x}{:0>2x}{:0>2x}'.format(blue, green, red)
-            cood_y = format_.THUMB_HEIGHT - pixel_coord_y
-            data_canvas.create_rectangle(pixel_coord_x, cood_y, pixel_coord_x, cood_y, fill=color, width=0)
+            img.put(color, (pixel_coord_x, format_.THUMB_HEIGHT - pixel_coord_y))
 
 
 def create_main_window(thm):
@@ -196,9 +195,10 @@ def create_main_window(thm):
 
         data_label = tkinter.Label(root, text="Thumbnail")
         data_label.grid(row=row, column=0)
-        data_canvas = tkinter.Canvas(root, width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
-        draw_thumbnail(thm, data_canvas)
-        data_canvas.grid(row=row, column=1)
+        img = tkinter.PhotoImage(width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
+        draw_thumbnail(thm, img)
+        img_label = tkinter.Label(root, image=img)
+        img_label.grid(row=row, column=1)
         row += 1
 
     elif thm.type_ == format_.TYPE_OBJECT and thm.version == format_.GROUP_VERSION:
@@ -213,9 +213,10 @@ def create_main_window(thm):
             row += 1
         data_label = tkinter.Label(root, text="Thumbnail")
         data_label.grid(row=row, column=0)
-        data_canvas = tkinter.Canvas(root, width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
-        draw_thumbnail(thm, data_canvas)
-        data_canvas.grid(row=row, column=1)
+        img = tkinter.PhotoImage(width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
+        draw_thumbnail(thm, img)
+        img_label = tkinter.Label(root, image=img)
+        img_label.grid(row=row, column=1)
         row += 1
 
     elif thm.type_ == format_.TYPE_SOUND:
@@ -273,9 +274,10 @@ def create_main_window(thm):
         if getattr(thm, 'data', None):
             data_label = tkinter.Label(root, text="Thumbnail")
             data_label.grid(row=row, column=0)
-            data_canvas = tkinter.Canvas(root, width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
-            draw_thumbnail(thm, data_canvas)
-            data_canvas.grid(row=row, column=1)
+            img = tkinter.PhotoImage(width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
+            draw_thumbnail(thm, img)
+            img_label = tkinter.Label(root, image=img)
+            img_label.grid(row=row, column=1)
             row += 1
 
     # associate thm
