@@ -128,14 +128,21 @@ sound_type_list_of_params = [
 
 
 def draw_thumbnail(thm, img):
-    background_color = (127, 127, 127)
+    bg_col = (127, 127, 127)    # background color
+
     for pixel_coord_x in range(fmt.THUMB_WIDTH):
         for pixel_coord_y in range(fmt.THUMB_HEIGHT):
-            pixel_offset = (pixel_coord_y * fmt.THUMB_WIDTH + pixel_coord_x) * 4
-            alpha = thm.data[pixel_offset + 3] / 255
-            red = int(round(thm.data[pixel_offset] * alpha + background_color[0] * (1.0 - alpha), 0))
-            green = int(round(thm.data[pixel_offset + 1] * alpha + background_color[1] * (1.0 - alpha), 0))
-            blue = int(round(thm.data[pixel_offset + 2] * alpha + background_color[2] * (1.0 - alpha), 0))
+
+            pixel_index = (pixel_coord_y * fmt.THUMB_WIDTH + pixel_coord_x)
+            pixel = thm.data[pixel_index]
+
+            alpha = pixel[3] / 255
+            alpha_inv = 1.0 - alpha
+
+            red = int(round(pixel[0] * alpha + bg_col[0] * alpha_inv, 0))
+            green = int(round(pixel[1] * alpha + bg_col[1] * alpha_inv, 0))
+            blue = int(round(pixel[2] * alpha + bg_col[2] * alpha_inv, 0))
+
             color = '#{:0>2x}{:0>2x}{:0>2x}'.format(blue, green, red)
             img.put(color, (pixel_coord_x, fmt.THUMB_HEIGHT - pixel_coord_y))
 
@@ -159,15 +166,15 @@ def create_main_window(thm):
     type_label = tkinter.Label(root, text="Type")
     type_label.grid(row=row, column=0)
     type_value = tkinter.StringVar()
-    if thm.type_ == fmt.TYPE_OBJECT and thm.version == fmt.GROUP_VERSION:
+    if thm.file_type == fmt.TYPE_OBJECT and thm.version == fmt.GROUP_VERSION:
         type_value.set('Group')
     else:
-        type_value.set(type_names[thm.type_])
+        type_value.set(type_names[thm.file_type])
     type_entry = tkinter.Entry(root, state=tkinter.DISABLED, textvariable=type_value, width=50)
     type_entry.grid(row=row, column=1)
     row += 1
 
-    if thm.type_ == fmt.TYPE_OBJECT and thm.version == fmt.OBJECT_VERSION:
+    if thm.file_type == fmt.TYPE_OBJECT and thm.version == fmt.OBJECT_VERSION:
 
         face_count_label = tkinter.Label(root, text="Face Count")
         face_count_label.grid(row=row, column=0)
@@ -193,7 +200,7 @@ def create_main_window(thm):
         img_label.grid(row=row, column=1)
         row += 1
 
-    elif thm.type_ == fmt.TYPE_OBJECT and thm.version == fmt.GROUP_VERSION:
+    elif thm.file_type == fmt.TYPE_OBJECT and thm.version == fmt.GROUP_VERSION:
         objects_label = tkinter.Label(root, text="Objects")
         objects_label.grid(row=row, column=0)
         row += 1
@@ -211,7 +218,7 @@ def create_main_window(thm):
         img_label.grid(row=row, column=1)
         row += 1
 
-    elif thm.type_ == fmt.TYPE_SOUND:
+    elif thm.file_type == fmt.TYPE_SOUND:
 
         quality_label = tkinter.Label(root, text="Quality")
         quality_label.grid(row=row, column=0)
@@ -261,7 +268,7 @@ def create_main_window(thm):
         game_type_spinbox.grid(row=row, column=1)
         row += 1
 
-    elif thm.type_ == fmt.TYPE_TEXTURE:
+    elif thm.file_type == fmt.TYPE_TEXTURE:
 
         if getattr(thm, 'data', None):
             data_label = tkinter.Label(root, text="Thumbnail")

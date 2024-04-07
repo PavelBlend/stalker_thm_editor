@@ -1,5 +1,4 @@
-
-from external import xray_io
+import external
 from . import fmt
 from . import read
 from . import types
@@ -31,26 +30,31 @@ thm_classes = {
 
 
 def read_thm(thm_file_path):
-    thm_file = open(thm_file_path, 'rb')
-    thm_data = thm_file.read()
-    thm_file.close()
 
-    chunked_reader = xray_io.ChunkedReader(thm_data)
+    # read file
+    with open(thm_file_path, 'rb') as thm_file:
+        thm_data = thm_file.read()
+
+    # get chunks
     chunks = {}
-
+    chunked_reader = external.xray_io.ChunkedReader(thm_data)
     for chunk_id, chunk_data in chunked_reader:
         chunks[chunk_id] = chunk_data
 
+    # get *.thm type
     type_chunk = chunks.pop(fmt.Chunks.TYPE)
-    type_ = read.read_type(type_chunk)
+    thm_type = read.read_type(type_chunk)
 
+    # get format version
     version_chunk = chunks.pop(fmt.Chunks.VERSION)
     version = read.read_version(version_chunk)
 
-    thm = thm_classes[(version, type_)]()
-    thm.set_type(type_)
+    # create thumbnail object
+    thm = thm_classes[(version, thm_type)]()
+    thm.set_type(thm_type)
     thm.set_version(version)
 
+    # read params
     for chunk_id, chunk_data in chunks.items():
         chunk_function = chunk_functions.get(chunk_id)
 
@@ -58,6 +62,9 @@ def read_thm(thm_file_path):
             chunk_function(chunk_data, thm)
 
         else:
-            print('unknown *.thm chunk: 0x{:x}'.format(chunk_id), len(chunk_data))
+            print('unknown *.thm chunk: 0x{:x} {}'.format(
+                chunk_id,
+                len(chunk_data)
+            ))
 
     return thm

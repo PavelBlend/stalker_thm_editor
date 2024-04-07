@@ -1,10 +1,9 @@
-
-from external import xray_io
+import external
 from . import fmt
 
 
 def read_version(data):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     version = packed_reader.getf('H')[0]
 
@@ -15,41 +14,40 @@ def read_version(data):
 
 
 def read_data(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
-    if len(data) != fmt.THUMB_SIZE * 4:
-        print('length data != 65 536')
+    if len(data) != fmt.THUMB_SIZE:
+        print('length data != {}'.format(THUMB_SIZE))
 
-    pixel_data = []
-
-    for data_index in range(fmt.THUMB_SIZE):
-        red, green, blue, alpha = packed_reader.getf('4B')
-        pixel_data.extend((red, green, blue, alpha))
+    pixel_data = [
+        packed_reader.getf('4B')    # red, green, blue, alpha
+        for i in range(fmt.THUMB_PIXELS_COUNT)
+    ]
 
     thm.set_data(pixel_data)
 
 
 def read_type(data):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
-    type_ = packed_reader.getf('I')[0]
+    thm_type = packed_reader.getf('I')[0]
 
-    if type_ not in fmt.SUPPORTED_TYPES:
-        raise BaseException('unsupported *.thm type: {}'.format(type_))
+    if thm_type not in fmt.SUPPORTED_TYPES:
+        raise BaseException('unsupported *.thm type: {}'.format(thm_type))
 
-    return type_
+    return thm_type
 
 
 def read_material_or_object_params(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
-    if thm.type_ == fmt.TYPE_OBJECT:
+    if thm.file_type == fmt.TYPE_OBJECT:
         face_count = packed_reader.getf('I')[0]
         vertex_count = packed_reader.getf('I')[0]
 
         thm.set_object_param(face_count, vertex_count)
 
-    elif thm.type_ == fmt.TYPE_TEXTURE:
+    elif thm.file_type == fmt.TYPE_TEXTURE:
         material = packed_reader.getf('I')[0]
         material_weight = packed_reader.getf('f')[0]
 
@@ -60,7 +58,7 @@ def read_material_or_object_params(data, thm):
 
 
 def read_bump(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     bump_virtual_height = packed_reader.getf('f')[0]
     bump_mode = packed_reader.getf('I')[0]
@@ -70,7 +68,7 @@ def read_bump(data, thm):
 
 
 def read_ext_normalmap(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     ext_normal_map_name = packed_reader.gets()
 
@@ -78,7 +76,7 @@ def read_ext_normalmap(data, thm):
 
 
 def read_texture_param(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     texture_format = packed_reader.getf('I')[0]
     flags = packed_reader.getf('I')[0]
@@ -95,7 +93,7 @@ def read_texture_param(data, thm):
 
 
 def read_texture_type(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     texture_type = packed_reader.getf('I')[0]
 
@@ -103,7 +101,7 @@ def read_texture_type(data, thm):
 
 
 def read_detail_ext(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     detail_name = packed_reader.gets()
     detail_scale = packed_reader.getf('f')[0]
@@ -112,7 +110,7 @@ def read_detail_ext(data, thm):
 
 
 def read_fade_delay(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     fade_delay = packed_reader.getf('B')[0]
 
@@ -120,7 +118,7 @@ def read_fade_delay(data, thm):
 
 
 def read_sound_param(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     quality = packed_reader.getf('f')[0]
     min_dist = packed_reader.getf('f')[0]
@@ -131,7 +129,7 @@ def read_sound_param(data, thm):
 
 
 def read_sound_param_2(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     base_volume = packed_reader.getf('f')[0]
 
@@ -139,7 +137,7 @@ def read_sound_param_2(data, thm):
 
 
 def read_sound_ai_dist(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     max_ai_dist = packed_reader.getf('f')[0]
 
@@ -147,7 +145,7 @@ def read_sound_ai_dist(data, thm):
 
 
 def read_group_param(data, thm):
-    packed_reader = xray_io.PackedReader(data)
+    packed_reader = external.xray_io.PackedReader(data)
 
     objects_count = packed_reader.getf('I')[0]
 

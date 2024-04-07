@@ -1,13 +1,9 @@
-
 class Thumbnail:
-    def __init__(self):
-        pass
-
     def set_version(self, version):
         self.version = version
 
-    def set_type(self, type_):
-        self.type_ = type_
+    def set_type(self, thm_type):
+        self.file_type = thm_type
 
 
 class ThumbnailData(Thumbnail):
@@ -30,11 +26,11 @@ class ThumbnailSound(Thumbnail):
 
 
 class ThumbnailGroup(ThumbnailData):
+    def __init__(self):
+        self.objects_names = []
+
     def set_object_name(self, object_name):
-        if getattr(self, 'objects_names', None):
-            self.objects_names.append(object_name)
-        else:
-            self.objects_names = [object_name, ]
+        self.objects_names.append(object_name)
 
 
 class ThumbnailObject(ThumbnailData):
@@ -44,8 +40,17 @@ class ThumbnailObject(ThumbnailData):
 
 
 class ThumbnailTexture(ThumbnailData):
-    def set_texture_param(self, texture_format, flags, border_color,
-            fade_color, fade_amount, mip_filter, width, height):
+    def set_texture_param(
+            self,
+            texture_format,
+            flags,
+            border_color,
+            fade_color,
+            fade_amount,
+            mip_filter,
+            width,
+            height
+        ):
         self.texture_format = texture_format
         self.flags = flags
         self.border_color = border_color
