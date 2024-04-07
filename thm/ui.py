@@ -1,7 +1,7 @@
-
-import tkinter, os, sys
-
-from . import format_
+import os
+import sys
+import tkinter
+from . import fmt
 
 
 type_names = {
@@ -127,25 +127,17 @@ sound_type_list_of_params = [
 ]
 
 
-def associate_thm_files():
-    ass_module_path = os.path.join(os.path.abspath(os.curdir), 'thm', 'associate.py')
-    python_exe_path = sys.executable
-    command = '"{0}" "{1}"'.format(python_exe_path, ass_module_path)
-    print(command)
-    os.system(command)
-
-
 def draw_thumbnail(thm, img):
     background_color = (127, 127, 127)
-    for pixel_coord_x in range(format_.THUMB_WIDTH):
-        for pixel_coord_y in range(format_.THUMB_HEIGHT):
-            pixel_offset = (pixel_coord_y * format_.THUMB_WIDTH + pixel_coord_x) * 4
+    for pixel_coord_x in range(fmt.THUMB_WIDTH):
+        for pixel_coord_y in range(fmt.THUMB_HEIGHT):
+            pixel_offset = (pixel_coord_y * fmt.THUMB_WIDTH + pixel_coord_x) * 4
             alpha = thm.data[pixel_offset + 3] / 255
             red = int(round(thm.data[pixel_offset] * alpha + background_color[0] * (1.0 - alpha), 0))
             green = int(round(thm.data[pixel_offset + 1] * alpha + background_color[1] * (1.0 - alpha), 0))
             blue = int(round(thm.data[pixel_offset + 2] * alpha + background_color[2] * (1.0 - alpha), 0))
             color = '#{:0>2x}{:0>2x}{:0>2x}'.format(blue, green, red)
-            img.put(color, (pixel_coord_x, format_.THUMB_HEIGHT - pixel_coord_y))
+            img.put(color, (pixel_coord_x, fmt.THUMB_HEIGHT - pixel_coord_y))
 
 
 def create_main_window(thm):
@@ -167,7 +159,7 @@ def create_main_window(thm):
     type_label = tkinter.Label(root, text="Type")
     type_label.grid(row=row, column=0)
     type_value = tkinter.StringVar()
-    if thm.type_ == format_.TYPE_OBJECT and thm.version == format_.GROUP_VERSION:
+    if thm.type_ == fmt.TYPE_OBJECT and thm.version == fmt.GROUP_VERSION:
         type_value.set('Group')
     else:
         type_value.set(type_names[thm.type_])
@@ -175,7 +167,7 @@ def create_main_window(thm):
     type_entry.grid(row=row, column=1)
     row += 1
 
-    if thm.type_ == format_.TYPE_OBJECT and thm.version == format_.OBJECT_VERSION:
+    if thm.type_ == fmt.TYPE_OBJECT and thm.version == fmt.OBJECT_VERSION:
 
         face_count_label = tkinter.Label(root, text="Face Count")
         face_count_label.grid(row=row, column=0)
@@ -195,13 +187,13 @@ def create_main_window(thm):
 
         data_label = tkinter.Label(root, text="Thumbnail")
         data_label.grid(row=row, column=0)
-        img = tkinter.PhotoImage(width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
+        img = tkinter.PhotoImage(width=fmt.THUMB_WIDTH, height=fmt.THUMB_HEIGHT)
         draw_thumbnail(thm, img)
         img_label = tkinter.Label(root, image=img)
         img_label.grid(row=row, column=1)
         row += 1
 
-    elif thm.type_ == format_.TYPE_OBJECT and thm.version == format_.GROUP_VERSION:
+    elif thm.type_ == fmt.TYPE_OBJECT and thm.version == fmt.GROUP_VERSION:
         objects_label = tkinter.Label(root, text="Objects")
         objects_label.grid(row=row, column=0)
         row += 1
@@ -213,13 +205,13 @@ def create_main_window(thm):
             row += 1
         data_label = tkinter.Label(root, text="Thumbnail")
         data_label.grid(row=row, column=0)
-        img = tkinter.PhotoImage(width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
+        img = tkinter.PhotoImage(width=fmt.THUMB_WIDTH, height=fmt.THUMB_HEIGHT)
         draw_thumbnail(thm, img)
         img_label = tkinter.Label(root, image=img)
         img_label.grid(row=row, column=1)
         row += 1
 
-    elif thm.type_ == format_.TYPE_SOUND:
+    elif thm.type_ == fmt.TYPE_SOUND:
 
         quality_label = tkinter.Label(root, text="Quality")
         quality_label.grid(row=row, column=0)
@@ -269,19 +261,15 @@ def create_main_window(thm):
         game_type_spinbox.grid(row=row, column=1)
         row += 1
 
-    elif thm.type_ == format_.TYPE_TEXTURE:
+    elif thm.type_ == fmt.TYPE_TEXTURE:
 
         if getattr(thm, 'data', None):
             data_label = tkinter.Label(root, text="Thumbnail")
             data_label.grid(row=row, column=0)
-            img = tkinter.PhotoImage(width=format_.THUMB_WIDTH, height=format_.THUMB_HEIGHT)
+            img = tkinter.PhotoImage(width=fmt.THUMB_WIDTH, height=fmt.THUMB_HEIGHT)
             draw_thumbnail(thm, img)
             img_label = tkinter.Label(root, image=img)
             img_label.grid(row=row, column=1)
             row += 1
-
-    # associate thm
-    associate_button = tkinter.Button(root, text="Associate *.thm files", command=associate_thm_files)
-    associate_button.grid(row=row, column=1)
 
     root.mainloop()

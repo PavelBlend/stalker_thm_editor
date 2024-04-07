@@ -1,8 +1,8 @@
 # This file was converted from the original C source:
-# 	lzhuf.c
-# 	written by Haruyasu Yoshizaki 11/20/1988
-# 	some minor changes 4/6/1989
-# 	comments translated by Haruhiko Okumura 4/7/1989
+#   lzhuf.c
+#   written by Haruyasu Yoshizaki 11/20/1988
+#   some minor changes 4/6/1989
+#   comments translated by Haruhiko Okumura 4/7/1989
 
 # LZHUF.C (c)1989 by Haruyasu Yoshizaki, Haruhiko Okumura, and Kenji Rikitake.
 # All rights reserved. Permission granted for non-commercial use.

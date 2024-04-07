@@ -1,6 +1,6 @@
 
 from external import xray_io
-from . import format_
+from . import fmt
 
 
 def read_version(data):
@@ -8,7 +8,7 @@ def read_version(data):
 
     version = packed_reader.getf('H')[0]
 
-    if version not in format_.SUPPORTED_VERSIONS:
+    if version not in fmt.SUPPORTED_VERSIONS:
         raise BaseException('unsupported *.thm version: {}'.format(version))
 
     return version
@@ -17,12 +17,12 @@ def read_version(data):
 def read_data(data, thm):
     packed_reader = xray_io.PackedReader(data)
 
-    if len(data) != format_.THUMB_SIZE * 4:
+    if len(data) != fmt.THUMB_SIZE * 4:
         print('length data != 65 536')
 
     pixel_data = []
 
-    for data_index in range(format_.THUMB_SIZE):
+    for data_index in range(fmt.THUMB_SIZE):
         red, green, blue, alpha = packed_reader.getf('4B')
         pixel_data.extend((red, green, blue, alpha))
 
@@ -34,7 +34,7 @@ def read_type(data):
 
     type_ = packed_reader.getf('I')[0]
 
-    if type_ not in format_.SUPPORTED_TYPES:
+    if type_ not in fmt.SUPPORTED_TYPES:
         raise BaseException('unsupported *.thm type: {}'.format(type_))
 
     return type_
@@ -43,13 +43,13 @@ def read_type(data):
 def read_material_or_object_params(data, thm):
     packed_reader = xray_io.PackedReader(data)
 
-    if thm.type_ == format_.TYPE_OBJECT:
+    if thm.type_ == fmt.TYPE_OBJECT:
         face_count = packed_reader.getf('I')[0]
         vertex_count = packed_reader.getf('I')[0]
 
         thm.set_object_param(face_count, vertex_count)
 
-    elif thm.type_ == format_.TYPE_TEXTURE:
+    elif thm.type_ == fmt.TYPE_TEXTURE:
         material = packed_reader.getf('I')[0]
         material_weight = packed_reader.getf('f')[0]
 
