@@ -19,12 +19,10 @@ def read_data(data, thm):
     if len(data) != fmt.THUMB_SIZE:
         print('length data != {}'.format(THUMB_SIZE))
 
-    pixel_data = [
+    thm.data = [
         packed_reader.getf('<4B')    # red, green, blue, alpha
         for i in range(fmt.THUMB_PIXELS_COUNT)
     ]
-
-    thm.set_data(pixel_data)
 
 
 def read_type(data):
@@ -42,16 +40,12 @@ def read_material_or_object_params(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
     if thm.file_type == fmt.TYPE_OBJECT:
-        face_count = packed_reader.getf('<I')[0]
-        vertex_count = packed_reader.getf('<I')[0]
-
-        thm.set_object_param(face_count, vertex_count)
+        thm.face_count = packed_reader.getf('<I')[0]
+        thm.vertex_count = packed_reader.getf('<I')[0]
 
     elif thm.file_type == fmt.TYPE_TEXTURE:
-        material = packed_reader.getf('<I')[0]
-        material_weight = packed_reader.getf('<f')[0]
-
-        thm.set_material(material, material_weight)
+        thm.material = packed_reader.getf('<I')[0]
+        thm.material_weight = packed_reader.getf('<f')[0]
 
     else:
         print('unsupported *.thm params')
@@ -60,95 +54,68 @@ def read_material_or_object_params(data, thm):
 def read_bump(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    bump_virtual_height = packed_reader.getf('<f')[0]
-    bump_mode = packed_reader.getf('<I')[0]
-    bump_name = packed_reader.gets()
-
-    thm.set_bump(bump_virtual_height, bump_mode, bump_name)
+    thm.bump_virtual_height = packed_reader.getf('<f')[0]
+    thm.bump_mode = packed_reader.getf('<I')[0]
+    thm.bump_name = packed_reader.gets()
 
 
 def read_ext_normalmap(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    ext_normal_map_name = packed_reader.gets()
-
-    thm.set_ext_normal_map_name(ext_normal_map_name)
+    thm.ext_normal_map_name = packed_reader.gets()
 
 
 def read_texture_param(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    texture_format = packed_reader.getf('<I')[0]
-    flags = packed_reader.getf('<I')[0]
-    border_color = packed_reader.getf('<I')[0]
-    fade_color = packed_reader.getf('<I')[0]
-    fade_amount = packed_reader.getf('<I')[0]
-    mip_filter = packed_reader.getf('<I')[0]
-    width = packed_reader.getf('<I')[0]
-    height = packed_reader.getf('<I')[0]
-
-    thm.set_texture_param(
-        texture_format,
-        flags,
-        border_color,
-        fade_color,
-        fade_amount,
-        mip_filter,
-        width,
-        height
-    )
+    thm.texture_format = packed_reader.getf('<I')[0]
+    thm.flags = packed_reader.getf('<I')[0]
+    thm.border_color = packed_reader.getf('<I')[0]
+    thm.fade_color = packed_reader.getf('<I')[0]
+    thm.fade_amount = packed_reader.getf('<I')[0]
+    thm.mip_filter = packed_reader.getf('<I')[0]
+    thm.width = packed_reader.getf('<I')[0]
+    thm.height = packed_reader.getf('<I')[0]
 
 
 def read_texture_type(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    texture_type = packed_reader.getf('<I')[0]
-
-    thm.set_texture_type(texture_type)
+    thm.texture_type = packed_reader.getf('<I')[0]
 
 
 def read_detail_ext(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    detail_name = packed_reader.gets()
-    detail_scale = packed_reader.getf('<f')[0]
-
-    thm.set_detail_ext(detail_name, detail_scale)
+    thm.detail_name = packed_reader.gets()
+    thm.detail_scale = packed_reader.getf('<f')[0]
 
 
 def read_fade_delay(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    fade_delay = packed_reader.getf('<B')[0]
-
-    thm.set_fade_delay(fade_delay)
+    thm.fade_delay = packed_reader.getf('<B')[0]
 
 
 def read_sound_param(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    quality = packed_reader.getf('<f')[0]
-    min_dist = packed_reader.getf('<f')[0]
-    max_dist = packed_reader.getf('<f')[0]
-    game_type = packed_reader.getf('<I')[0]
-
-    thm.set_params(quality, min_dist, max_dist, game_type)
+    thm.quality = packed_reader.getf('<f')[0]
+    thm.min_dist = packed_reader.getf('<f')[0]
+    thm.max_dist = packed_reader.getf('<f')[0]
+    thm.game_type = packed_reader.getf('<I')[0]
 
 
 def read_sound_param_2(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    base_volume = packed_reader.getf('<f')[0]
-
-    thm.set_params_2(base_volume)
+    thm.base_volume = packed_reader.getf('<f')[0]
 
 
 def read_sound_ai_dist(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    max_ai_dist = packed_reader.getf('<f')[0]
-
-    thm.set_ai_dist(max_ai_dist)
+    thm.max_ai_dist = packed_reader.getf('<f')[0]
 
 
 def read_group_param(data, thm):
@@ -159,4 +126,4 @@ def read_group_param(data, thm):
     for object_index in range(objects_count):
         object_name = packed_reader.gets()
 
-        thm.set_object_name(object_name)
+        thm.objects_names.append(object_name)

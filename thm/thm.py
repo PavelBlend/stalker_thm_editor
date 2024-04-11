@@ -51,8 +51,8 @@ def read_thm(thm_file_path):
 
     # create thumbnail object
     thm = thm_classes[(version, thm_type)]()
-    thm.set_type(thm_type)
-    thm.set_version(version)
+    thm.file_type = thm_type
+    thm.version = version
 
     # read params
     for chunk_id, chunk_data in chunks.items():
