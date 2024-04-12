@@ -1,24 +1,28 @@
 import external
 from . import fmt
 from . import read
+from . import tex
+from . import obj
+from . import snd
+from . import group
 from . import types
 
 
 chunk_functions = {
     fmt.ThmChunks.DATA:                     read.read_data,
 
-    fmt.ThmTextureChunks.TEXTURE_PARAM:     read.read_texture_param,
-    fmt.ThmTextureChunks.TEXTURE_TYPE:      read.read_texture_type,
-    fmt.ThmTextureChunks.DETAIL_EXT:        read.read_detail_ext,
-    fmt.ThmTextureChunks.BUMP:              read.read_bump,
-    fmt.ThmTextureChunks.EXT_NORMALMAP:     read.read_ext_normalmap,
-    fmt.ThmTextureChunks.FADE_DELAY:        read.read_fade_delay,
+    fmt.ThmTextureChunks.TEXTURE_PARAM:     tex.read_texture_param,
+    fmt.ThmTextureChunks.TEXTURE_TYPE:      tex.read_texture_type,
+    fmt.ThmTextureChunks.DETAIL_EXT:        tex.read_detail_ext,
+    fmt.ThmTextureChunks.BUMP:              tex.read_bump,
+    fmt.ThmTextureChunks.EXT_NORMALMAP:     tex.read_ext_normalmap,
+    fmt.ThmTextureChunks.FADE_DELAY:        tex.read_fade_delay,
 
-    fmt.ThmSoundChunks.SOUND_PARAM:         read.read_sound_param,
-    fmt.ThmSoundChunks.SOUND_BASE_VOLUME:   read.read_sound_base_volume,
-    fmt.ThmSoundChunks.SOUND_AI_DIST:       read.read_sound_ai_dist,
+    fmt.ThmSoundChunks.SOUND_PARAM:         snd.read_sound_param,
+    fmt.ThmSoundChunks.SOUND_BASE_VOLUME:   snd.read_sound_base_volume,
+    fmt.ThmSoundChunks.SOUND_AI_DIST:       snd.read_sound_ai_dist,
 
-    fmt.ThmGroupChunks.GROUP_PARAM:         read.read_group_param
+    fmt.ThmGroupChunks.GROUP_PARAM:         group.read_group_param
 }
 
 thm_classes = {
@@ -76,9 +80,9 @@ def _read_thm_params(chunks, thm_obj):
     # OBJECT_PARAM and MATERIAL chunks have the same ID.
     # We need to add the necessary reading function.
     if thm_obj.file_type == fmt.Type.OBJECT:
-        chunk_functions.update({fmt.ThmObjectChunks.OBJECT_PARAM: read.read_obj_params})
+        chunk_functions.update({fmt.ThmObjectChunks.OBJECT_PARAM: obj.read_obj_params})
     else:
-        chunk_functions.update({fmt.ThmTextureChunks.MATERIAL: read.read_mat})
+        chunk_functions.update({fmt.ThmTextureChunks.MATERIAL: tex.read_mat})
 
     for chunk_id, chunk_data in chunks.items():
 
