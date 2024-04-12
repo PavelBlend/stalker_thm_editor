@@ -7,7 +7,7 @@ def read_version(data):
 
     version = packed_reader.getf('<H')[0]
 
-    if version not in fmt.SUPPORTED_VERSIONS:
+    if version not in fmt.Version.SUPPORTED:
         raise BaseException('unsupported *.thm version: {}'.format(version))
 
     return version

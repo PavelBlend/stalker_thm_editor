@@ -166,7 +166,7 @@ def create_main_window(thm):
     type_label = tkinter.Label(root, text="Type")
     type_label.grid(row=row, column=0)
     type_value = tkinter.StringVar()
-    if thm.file_type == fmt.Type.OBJECT and thm.version == fmt.GROUP_VERSION:
+    if thm.file_type == fmt.Type.OBJECT and thm.version == fmt.Version.GROUP:
         type_value.set('Group')
     else:
         type_value.set(type_names[thm.file_type])
@@ -174,7 +174,7 @@ def create_main_window(thm):
     type_entry.grid(row=row, column=1)
     row += 1
 
-    if thm.file_type == fmt.Type.OBJECT and thm.version == fmt.OBJECT_VERSION:
+    if thm.file_type == fmt.Type.OBJECT and thm.version == fmt.Version.OBJECT:
 
         face_count_label = tkinter.Label(root, text="Face Count")
         face_count_label.grid(row=row, column=0)
@@ -200,7 +200,7 @@ def create_main_window(thm):
         img_label.grid(row=row, column=1)
         row += 1
 
-    elif thm.file_type == fmt.Type.OBJECT and thm.version == fmt.GROUP_VERSION:
+    elif thm.file_type == fmt.Type.OBJECT and thm.version == fmt.Version.GROUP:
         objects_label = tkinter.Label(root, text="Objects")
         objects_label.grid(row=row, column=0)
         row += 1
