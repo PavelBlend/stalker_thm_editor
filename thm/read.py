@@ -36,7 +36,7 @@ def read_type(data):
     return thm_type
 
 
-def read_material_or_object_params(data, thm):
+def read_mat_or_obj_params(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
     if thm.file_type == fmt.Type.OBJECT:
