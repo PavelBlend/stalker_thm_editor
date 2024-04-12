@@ -15,7 +15,7 @@ chunk_functions = {
     fmt.ThmTextureChunks.FADE_DELAY:        read.read_fade_delay,
 
     fmt.ThmSoundChunks.SOUND_PARAM:         read.read_sound_param,
-    fmt.ThmSoundChunks.SOUND_PARAM_2:       read.read_sound_param_2,
+    fmt.ThmSoundChunks.SOUND_BASE_VOLUME:   read.read_sound_base_volume,
     fmt.ThmSoundChunks.SOUND_AI_DIST:       read.read_sound_ai_dist,
 
     fmt.ThmGroupChunks.GROUP_PARAM:         read.read_group_param

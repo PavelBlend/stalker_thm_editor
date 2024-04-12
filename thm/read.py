@@ -25,12 +25,12 @@ def read_type(packed_reader):
 
 
 def read_obj_params(packed_reader, thm):
-    thm.face_count = packed_reader.getf('<I')[0]
-    thm.vertex_count = packed_reader.getf('<I')[0]
+    thm.face_count      = packed_reader.getf('<I')[0]
+    thm.vertex_count    = packed_reader.getf('<I')[0]
 
 
 def read_mat(packed_reader, thm):
-    thm.material = packed_reader.getf('<I')[0]
+    thm.material        = packed_reader.getf('<I')[0]
     thm.material_weight = packed_reader.getf('<f')[0]
 
 
@@ -45,14 +45,14 @@ def read_ext_normalmap(packed_reader, thm):
 
 
 def read_texture_param(packed_reader, thm):
-    thm.texture_format = packed_reader.getf('<I')[0]
-    thm.flags = packed_reader.getf('<I')[0]
-    thm.border_color = packed_reader.getf('<I')[0]
-    thm.fade_color = packed_reader.getf('<I')[0]
-    thm.fade_amount = packed_reader.getf('<I')[0]
-    thm.mip_filter = packed_reader.getf('<I')[0]
-    thm.width = packed_reader.getf('<I')[0]
-    thm.height = packed_reader.getf('<I')[0]
+    thm.texture_format  = packed_reader.getf('<I')[0]
+    thm.flags           = packed_reader.getf('<I')[0]
+    thm.border_color    = packed_reader.getf('<I')[0]
+    thm.fade_color      = packed_reader.getf('<I')[0]
+    thm.fade_amount     = packed_reader.getf('<I')[0]
+    thm.mip_filter      = packed_reader.getf('<I')[0]
+    thm.width           = packed_reader.getf('<I')[0]
+    thm.height          = packed_reader.getf('<I')[0]
 
 
 def read_texture_type(packed_reader, thm):
@@ -60,8 +60,8 @@ def read_texture_type(packed_reader, thm):
 
 
 def read_detail_ext(packed_reader, thm):
-    thm.detail_name = packed_reader.gets()
-    thm.detail_scale = packed_reader.getf('<f')[0]
+    thm.detail_name     = packed_reader.gets()
+    thm.detail_scale    = packed_reader.getf('<f')[0]
 
 
 def read_fade_delay(packed_reader, thm):
@@ -69,13 +69,13 @@ def read_fade_delay(packed_reader, thm):
 
 
 def read_sound_param(packed_reader, thm):
-    thm.quality = packed_reader.getf('<f')[0]
-    thm.min_dist = packed_reader.getf('<f')[0]
-    thm.max_dist = packed_reader.getf('<f')[0]
-    thm.game_type = packed_reader.getf('<I')[0]
+    thm.quality     = packed_reader.getf('<f')[0]
+    thm.min_dist    = packed_reader.getf('<f')[0]
+    thm.max_dist    = packed_reader.getf('<f')[0]
+    thm.game_type   = packed_reader.getf('<I')[0]
 
 
-def read_sound_param_2(packed_reader, thm):
+def read_sound_base_volume(packed_reader, thm):
     thm.base_volume = packed_reader.getf('<f')[0]
 
 

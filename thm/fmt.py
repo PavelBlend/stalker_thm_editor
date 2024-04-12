@@ -19,9 +19,9 @@ class ThmTextureChunks:
 
 
 class ThmSoundChunks:
-    SOUND_PARAM     = 0x1000
-    SOUND_PARAM_2   = 0x1001
-    SOUND_AI_DIST   = 0x1002
+    SOUND_PARAM         = 0x1000
+    SOUND_BASE_VOLUME   = 0x1001
+    SOUND_AI_DIST       = 0x1002
 
 
 class ThmGroupChunks:
