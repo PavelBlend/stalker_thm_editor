@@ -22,10 +22,10 @@ chunk_functions = {
 }
 
 thm_classes = {
-    (fmt.GROUP_VERSION, fmt.TYPE_OBJECT): types.ThumbnailGroup,
-    (fmt.OBJECT_VERSION, fmt.TYPE_OBJECT): types.ThumbnailObject,
-    (fmt.TEXTURE_VERSION, fmt.TYPE_TEXTURE): types.ThumbnailTexture,
-    (fmt.SOUND_VERSION, fmt.TYPE_SOUND): types.ThumbnailSound
+    (fmt.GROUP_VERSION, fmt.Type.OBJECT): types.ThumbnailGroup,
+    (fmt.OBJECT_VERSION, fmt.Type.OBJECT): types.ThumbnailObject,
+    (fmt.TEXTURE_VERSION, fmt.Type.TEXTURE): types.ThumbnailTexture,
+    (fmt.SOUND_VERSION, fmt.Type.SOUND): types.ThumbnailSound
 }
 
 

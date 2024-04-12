@@ -30,7 +30,7 @@ def read_type(data):
 
     thm_type = packed_reader.getf('<I')[0]
 
-    if thm_type not in fmt.SUPPORTED_TYPES:
+    if thm_type not in fmt.Type.SUPPORTED:
         raise BaseException('unsupported *.thm type: {}'.format(thm_type))
 
     return thm_type
@@ -39,11 +39,11 @@ def read_type(data):
 def read_material_or_object_params(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    if thm.file_type == fmt.TYPE_OBJECT:
+    if thm.file_type == fmt.Type.OBJECT:
         thm.face_count = packed_reader.getf('<I')[0]
         thm.vertex_count = packed_reader.getf('<I')[0]
 
-    elif thm.file_type == fmt.TYPE_TEXTURE:
+    elif thm.file_type == fmt.Type.TEXTURE:
         thm.material = packed_reader.getf('<I')[0]
         thm.material_weight = packed_reader.getf('<f')[0]
 
