@@ -39,7 +39,8 @@ class ThumbnailObject(ThumbnailData):
 class ThumbnailTexture(ThumbnailData):
     def __init__(self):
         super().__init__()
-        self.texture_format = None
+        self.tex_format = None
+        self.tex_format_id = None
         self.flags = None
         self.border_color = None
         self.fade_color = None

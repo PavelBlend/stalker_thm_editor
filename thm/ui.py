@@ -275,7 +275,7 @@ def create_main_window(thm):
         tex_fmt_label.grid(row=row, column=0)
 
         tex_fmt_value = tkinter.StringVar()
-        tex_fmt_value.set(thm.texture_format)
+        tex_fmt_value.set(thm.tex_format)
 
         tex_fmt_entry = tkinter.Entry(root, state=tkinter.DISABLED, textvariable=tex_fmt_value, width=50)
         tex_fmt_entry.grid(row=row, column=1)
