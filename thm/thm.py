@@ -7,12 +7,9 @@ from . import types
 chunk_functions = {
     fmt.ThmChunks.DATA:                     read.read_data,
 
-    fmt.ThmObjectChunks.OBJECT_PARAM:       read.read_obj_params,
-
     fmt.ThmTextureChunks.TEXTURE_PARAM:     read.read_texture_param,
     fmt.ThmTextureChunks.TEXTURE_TYPE:      read.read_texture_type,
     fmt.ThmTextureChunks.DETAIL_EXT:        read.read_detail_ext,
-    fmt.ThmTextureChunks.MATERIAL:          read.read_mat,
     fmt.ThmTextureChunks.BUMP:              read.read_bump,
     fmt.ThmTextureChunks.EXT_NORMALMAP:     read.read_ext_normalmap,
     fmt.ThmTextureChunks.FADE_DELAY:        read.read_fade_delay,
@@ -40,19 +37,17 @@ def _read_file(thm_file_path):
 
 
 def _get_chunks(thm_data):
-    chunks = {}
     chunked_reader = external.xray_io.ChunkedReader(thm_data)
-
-    for chunk_id, chunk_data in chunked_reader:
-        chunks[chunk_id] = chunk_data
-
-    return chunks
+    return {chunk_id: chunk_data for chunk_id, chunk_data in chunked_reader}
 
 
 def _read_type(chunks):
     type_chunk = chunks.pop(fmt.ThmChunks.TYPE)
     packed_reader = external.xray_io.PackedReader(type_chunk)
     thm_type = read.read_type(packed_reader)
+
+    if thm_type not in fmt.Type.SUPPORTED:
+        raise BaseException('unsupported *.thm type: {}'.format(thm_type))
 
     return thm_type
 
@@ -61,6 +56,9 @@ def _read_version(chunks):
     version_chunk = chunks.pop(fmt.ThmChunks.VERSION)
     packed_reader = external.xray_io.PackedReader(version_chunk)
     version = read.read_version(packed_reader)
+
+    if version not in fmt.Version.SUPPORTED:
+        raise BaseException('unsupported *.thm version: {}'.format(version))
 
     return version
 
@@ -74,6 +72,14 @@ def _create_thm_object(thm_type, version):
 
 
 def _read_thm_params(chunks, thm_obj):
+
+    # OBJECT_PARAM and MATERIAL chunks have the same ID.
+    # We need to add the necessary reading function.
+    if thm_obj.file_type == fmt.Type.OBJECT:
+        chunk_functions.update({fmt.ThmObjectChunks.OBJECT_PARAM: read.read_obj_params})
+    else:
+        chunk_functions.update({fmt.ThmTextureChunks.MATERIAL: read.read_mat})
+
     for chunk_id, chunk_data in chunks.items():
 
         packed_reader = external.xray_io.PackedReader(chunk_data)

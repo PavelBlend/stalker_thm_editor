@@ -5,9 +5,6 @@ from . import fmt
 def read_version(packed_reader):
     version = packed_reader.getf('<H')[0]
 
-    if version not in fmt.Version.SUPPORTED:
-        raise BaseException('unsupported *.thm version: {}'.format(version))
-
     return version
 
 
@@ -23,9 +20,6 @@ def read_data(packed_reader, thm):
 
 def read_type(packed_reader):
     thm_type = packed_reader.getf('<I')[0]
-
-    if thm_type not in fmt.Type.SUPPORTED:
-        raise BaseException('unsupported *.thm type: {}'.format(thm_type))
 
     return thm_type
 
