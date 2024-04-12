@@ -36,19 +36,18 @@ def read_type(data):
     return thm_type
 
 
-def read_mat_or_obj_params(data, thm):
+def read_obj_params(data, thm):
     packed_reader = external.xray_io.PackedReader(data)
 
-    if thm.file_type == fmt.Type.OBJECT:
-        thm.face_count = packed_reader.getf('<I')[0]
-        thm.vertex_count = packed_reader.getf('<I')[0]
+    thm.face_count = packed_reader.getf('<I')[0]
+    thm.vertex_count = packed_reader.getf('<I')[0]
 
-    elif thm.file_type == fmt.Type.TEXTURE:
-        thm.material = packed_reader.getf('<I')[0]
-        thm.material_weight = packed_reader.getf('<f')[0]
 
-    else:
-        print('unsupported *.thm params')
+def read_mat(data, thm):
+    packed_reader = external.xray_io.PackedReader(data)
+
+    thm.material = packed_reader.getf('<I')[0]
+    thm.material_weight = packed_reader.getf('<f')[0]
 
 
 def read_bump(data, thm):

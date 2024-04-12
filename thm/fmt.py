@@ -1,18 +1,31 @@
-class Chunks:
+class ThmChunks:
     VERSION = 0x0810
     DATA = 0x0811
-    TEXTURE_PARAM = 0x0812
     TYPE = 0x0813
+
+
+class ThmObjectChunks:
+    OBJECT_PARAM = 0x0816
+
+
+class ThmTextureChunks:
+    TEXTURE_PARAM = 0x0812
     TEXTURE_TYPE = 0x0814
     DETAIL_EXT = 0x0815
-    MATERIAL_OR_OBJECTPARAMS = 0x0816
+    MATERIAL = 0x0816
     BUMP = 0x0817
     EXT_NORMALMAP = 0x0818
     FADE_DELAY = 0x0819
-    SOUNDPARAM = 0x1000
-    SOUNDPARAM2 = 0x1001
+
+
+class ThmSoundChunks:
+    SOUND_PARAM = 0x1000
+    SOUND_PARAM_2 = 0x1001
     SOUND_AI_DIST = 0x1002
-    GROUPPARAM = 0x0001
+
+
+class ThmGroupChunks:
+    GROUP_PARAM = 0x0001
 
 
 class Type:

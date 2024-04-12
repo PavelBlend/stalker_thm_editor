@@ -5,20 +5,23 @@ from . import types
 
 
 chunk_functions = {
-    fmt.Chunks.VERSION:                     read.read_version,
-    fmt.Chunks.DATA:                        read.read_data,
-    fmt.Chunks.TEXTURE_PARAM:               read.read_texture_param,
-    fmt.Chunks.TEXTURE_TYPE:                read.read_texture_type,
-    fmt.Chunks.DETAIL_EXT:                  read.read_detail_ext,
-    fmt.Chunks.TYPE:                        read.read_type,
-    fmt.Chunks.MATERIAL_OR_OBJECTPARAMS:    read.read_mat_or_obj_params,
-    fmt.Chunks.BUMP:                        read.read_bump,
-    fmt.Chunks.EXT_NORMALMAP:               read.read_ext_normalmap,
-    fmt.Chunks.FADE_DELAY:                  read.read_fade_delay,
-    fmt.Chunks.SOUNDPARAM:                  read.read_sound_param,
-    fmt.Chunks.SOUNDPARAM2:                 read.read_sound_param_2,
-    fmt.Chunks.SOUND_AI_DIST:               read.read_sound_ai_dist,
-    fmt.Chunks.GROUPPARAM:                  read.read_group_param
+    fmt.ThmChunks.DATA:                     read.read_data,
+
+    fmt.ThmObjectChunks.OBJECT_PARAM:       read.read_obj_params,
+
+    fmt.ThmTextureChunks.TEXTURE_PARAM:     read.read_texture_param,
+    fmt.ThmTextureChunks.TEXTURE_TYPE:      read.read_texture_type,
+    fmt.ThmTextureChunks.DETAIL_EXT:        read.read_detail_ext,
+    fmt.ThmTextureChunks.MATERIAL:          read.read_mat,
+    fmt.ThmTextureChunks.BUMP:              read.read_bump,
+    fmt.ThmTextureChunks.EXT_NORMALMAP:     read.read_ext_normalmap,
+    fmt.ThmTextureChunks.FADE_DELAY:        read.read_fade_delay,
+
+    fmt.ThmSoundChunks.SOUND_PARAM:         read.read_sound_param,
+    fmt.ThmSoundChunks.SOUND_PARAM_2:       read.read_sound_param_2,
+    fmt.ThmSoundChunks.SOUND_AI_DIST:       read.read_sound_ai_dist,
+
+    fmt.ThmGroupChunks.GROUP_PARAM:         read.read_group_param
 }
 
 thm_classes = {
@@ -47,14 +50,14 @@ def _get_chunks(thm_data):
 
 
 def _read_type(chunks):
-    type_chunk = chunks.pop(fmt.Chunks.TYPE)
+    type_chunk = chunks.pop(fmt.ThmChunks.TYPE)
     thm_type = read.read_type(type_chunk)
 
     return thm_type
 
 
 def _read_version(chunks):
-    version_chunk = chunks.pop(fmt.Chunks.VERSION)
+    version_chunk = chunks.pop(fmt.ThmChunks.VERSION)
     version = read.read_version(version_chunk)
 
     return version
@@ -80,7 +83,6 @@ def _read_thm_params(chunks, thm_obj):
             chink_size = len(chunk_data)
             print('Unknown *.thm chunk:')
             print('    ID: 0x{:x}, Size: {}\n'.format(chunk_id, chink_size))
-
 
 
 def read_thm(thm_file_path):
