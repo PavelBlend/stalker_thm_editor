@@ -51,14 +51,16 @@ def _get_chunks(thm_data):
 
 def _read_type(chunks):
     type_chunk = chunks.pop(fmt.ThmChunks.TYPE)
-    thm_type = read.read_type(type_chunk)
+    packed_reader = external.xray_io.PackedReader(type_chunk)
+    thm_type = read.read_type(packed_reader)
 
     return thm_type
 
 
 def _read_version(chunks):
     version_chunk = chunks.pop(fmt.ThmChunks.VERSION)
-    version = read.read_version(version_chunk)
+    packed_reader = external.xray_io.PackedReader(version_chunk)
+    version = read.read_version(packed_reader)
 
     return version
 
@@ -74,10 +76,11 @@ def _create_thm_object(thm_type, version):
 def _read_thm_params(chunks, thm_obj):
     for chunk_id, chunk_data in chunks.items():
 
+        packed_reader = external.xray_io.PackedReader(chunk_data)
         chunk_function = chunk_functions.get(chunk_id)
 
         if chunk_function:
-            chunk_function(chunk_data, thm_obj)
+            chunk_function(packed_reader, thm_obj)
 
         else:
             chink_size = len(chunk_data)
