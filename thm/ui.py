@@ -270,6 +270,17 @@ def create_main_window(thm):
 
     elif thm.file_type == fmt.Type.TEXTURE:
 
+        # texture format
+        tex_fmt_label = tkinter.Label(root, text="Format")
+        tex_fmt_label.grid(row=row, column=0)
+
+        tex_fmt_value = tkinter.StringVar()
+        tex_fmt_value.set(thm.texture_format)
+
+        tex_fmt_entry = tkinter.Entry(root, state=tkinter.DISABLED, textvariable=tex_fmt_value, width=50)
+        tex_fmt_entry.grid(row=row, column=1)
+        row += 1
+
         if getattr(thm, 'data', None):
             data_label = tkinter.Label(root, text="Thumbnail")
             data_label.grid(row=row, column=0)

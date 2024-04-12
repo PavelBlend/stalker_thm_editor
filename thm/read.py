@@ -45,7 +45,8 @@ def read_ext_normalmap(packed_reader, thm):
 
 
 def read_texture_param(packed_reader, thm):
-    thm.texture_format  = packed_reader.getf('<I')[0]
+    tex_fmt_id = packed_reader.getf('<I')[0]
+    thm.texture_format  = fmt.tex_fmt_names.get(tex_fmt_id, 'Unknown')
     thm.flags           = packed_reader.getf('<I')[0]
     thm.border_color    = packed_reader.getf('<I')[0]
     thm.fade_color      = packed_reader.getf('<I')[0]

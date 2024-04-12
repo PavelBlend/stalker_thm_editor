@@ -37,6 +37,41 @@ class Type:
     SUPPORTED       = (OBJECT, TEXTURE, SOUND, GROUP)
 
 
+class TextureFormat:
+    DXT1_RGB    =  0
+    DXT1_ARGB   =  1
+    DXT3_ARGB   =  2
+    DXT5_ARGB   =  3
+    RGB_4444    =  4
+    ARGB_1555   =  5
+    RGB_565     =  6
+    RGB         =  7
+    RGBA        =  8
+    NVHS        =  9
+    NVHU        = 10
+    A8          = 11
+    L8          = 12
+    A8L8        = 13
+
+
+tex_fmt_names = {
+    TextureFormat.DXT1_RGB:   'DXT1 RGB',
+    TextureFormat.DXT1_ARGB:  'DXT1 ARGB',
+    TextureFormat.DXT3_ARGB:  'DXT3 ARGB',
+    TextureFormat.DXT5_ARGB:  'DXT5 ARGB',
+    TextureFormat.RGB_4444:   'RGB 4.4.4.4',
+    TextureFormat.ARGB_1555:  'ARGB 1.5.5.5',
+    TextureFormat.RGB_565:    'RGB 5.6.5',
+    TextureFormat.RGB:        'RGB',
+    TextureFormat.RGBA:       'RGBA',
+    TextureFormat.NVHS:       'NVHS',
+    TextureFormat.NVHU:       'NVHU',
+    TextureFormat.A8:         'A8',
+    TextureFormat.L8:         'L8',
+    TextureFormat.A8L8:       'A8 L8'
+}
+
+
 class Version:
     OBJECT          = 18
     TEXTURE         = 18
