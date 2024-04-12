@@ -55,20 +55,20 @@ class TextureFormat:
 
 
 tex_fmt_names = {
-    TextureFormat.DXT1_RGB:   'DXT1 RGB',
-    TextureFormat.DXT1_ARGB:  'DXT1 ARGB',
-    TextureFormat.DXT3_ARGB:  'DXT3 ARGB',
-    TextureFormat.DXT5_ARGB:  'DXT5 ARGB',
-    TextureFormat.RGB_4444:   'RGB 4.4.4.4',
-    TextureFormat.ARGB_1555:  'ARGB 1.5.5.5',
-    TextureFormat.RGB_565:    'RGB 5.6.5',
-    TextureFormat.RGB:        'RGB',
-    TextureFormat.RGBA:       'RGBA',
+    TextureFormat.DXT1_RGB:   'DXT1',
+    TextureFormat.DXT1_ARGB:  'DXT1 Alpha',
+    TextureFormat.DXT3_ARGB:  'DXT3',
+    TextureFormat.DXT5_ARGB:  'DXT5',
+    TextureFormat.RGB_4444:   '16 Bit (4:4:4:4)',
+    TextureFormat.ARGB_1555:  '16 Bit (1:5:5:5)',
+    TextureFormat.RGB_565:    '16 Bit (5:6:5)',
+    TextureFormat.RGB:        '24 Bit (8:8:8)',
+    TextureFormat.RGBA:       '32 Bit (8:8:8:8)',
     TextureFormat.NVHS:       'NVHS',
     TextureFormat.NVHU:       'NVHU',
-    TextureFormat.A8:         'A8',
-    TextureFormat.L8:         'L8',
-    TextureFormat.A8L8:       'A8 L8'
+    TextureFormat.A8:         '8 Bit (Alpha)',
+    TextureFormat.L8:         '8 Bit (Luminance)',
+    TextureFormat.A8L8:       '16 Bit (Alpha:Luminance)'
 }
 
 
